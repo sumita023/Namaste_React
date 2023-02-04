@@ -7,3 +7,6 @@ https://reactjs.org/docs/cdn-links.html
 why crossorigin attribute in react CDN?
 
 to set Access-Control-Allow-Origin=* in HTTP Header.
+
+
+Chapter 02:
