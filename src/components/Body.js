@@ -1,6 +1,7 @@
 import { restaurantList } from "../constant";
 import RestaurantCard from "./RestaurantCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
 
 function filterData(restaurants, searchText) {
   const filterData = restaurants.filter((restaurant) =>
@@ -12,8 +13,28 @@ function filterData(restaurants, searchText) {
 
 const Body = () => {
   const [searchText, setSearcText] = useState("");
-  const [restaurants, setRestaurants] = useState(restaurantList);
-  return (
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([]);
+
+
+  useEffect(() => {
+    getRestaurants();
+    console.log("useEffect");
+  }, []);
+
+  console.log("render");
+
+  async function getRestaurants() {
+    var data = await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7008241&lng=88.3748212&page_type=DESKTOP_WEB_LISTING");
+    var json = await data.json();
+    setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    console.log(json);
+  }
+
+  if(filteredRestaurants?.length===0) return <h1>No Restraurant Found</h1>
+
+  return (allRestaurants.length===0)?<Shimmer/> : (
     <>
       <div className="search-container">
         <input
@@ -31,15 +52,15 @@ const Body = () => {
           onClick={() => {
             //need to filter data
             //update the state -restaurants
-            const data=filterData(restaurants, searchText);
-            setRestaurants(data);
+            const data = filterData(allRestaurants, searchText);
+            setFilteredRestaurants(data);
           }}
         >
           Search
         </button>
       </div>
       <div className="restaurant-list">
-        {restaurants.map((restaurant) => {
+        {filteredRestaurants.map((restaurant) => {
           return (
             <RestaurantCard key={restaurant.data.id} {...restaurant.data} />
           );
