@@ -17,6 +17,7 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [allRestaurants, setAllRestaurants] = useState([]);
 
+  console.log("useState" + useState());
 
   useEffect(() => {
     getRestaurants();
@@ -26,18 +27,22 @@ const Body = () => {
   console.log("render");
 
   async function getRestaurants() {
-    var data = await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7008241&lng=88.3748212&page_type=DESKTOP_WEB_LISTING");
+    var data = await fetch(
+      "https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7008241&lng=88.3748212&page_type=DESKTOP_WEB_LISTING"
+    );
     var json = await data.json();
     setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     console.log(json);
   }
 
-   if(filteredRestaurants?.length===0) return <h1>No Restraurant Found</h1>
+  // if (filteredRestaurants?.length === 0) return <h1>No Restraurant Found</h1>;
   // if(!allRestaurants)
   // return null;
 
-  return (allRestaurants?.length===0)?<Shimmer/> : (
+  return allRestaurants?.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -63,11 +68,17 @@ const Body = () => {
         </button>
       </div>
       <div className="restaurant-list">
-        {filteredRestaurants.map((restaurant) => {
-          return (
-            <Link to={"/restaurant/"+restaurant.data.id} key={restaurant.data.id}><RestaurantCard  {...restaurant.data} /></Link>
-          );
-        })}
+        {filteredRestaurants?.length > 0 &&
+          filteredRestaurants.map((restaurant) => {
+            return (
+              <Link
+                to={"/restaurant/" + restaurant.data.id}
+                key={restaurant.data.id}
+              >
+                <RestaurantCard {...restaurant.data} />
+              </Link>
+            );
+          })}
         {/* <RestaurantCard {...restaurantList[0].data}/>
         <RestaurantCard {...restaurantList[1].data}/>
         <RestaurantCard {...restaurantList[2].data}/>

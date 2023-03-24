@@ -18,3 +18,30 @@ https://reactjs.org/docs/faq-structure.html
 chapter 07:
 https://formik.org/
 https://reactrouter.com/en/main
+
+
+chapter 08:
+why can't we have the callback function of useeffect async??????
+Ans: - Why? Because React’s useEffect hook expects a cleanup function returned from it which is called when the component unmounts. 
+Using an async function here will cause a bug as the cleanup function will never get called.
+
+useEffect(async () => {
+  const users = await fetchUsers();
+  setUsers(users);
+
+  return () => {
+    // this never gets called, hello memory leaks...
+  };
+}, []);
+
+so use-
+useEffect(() => {
+  (async () => {
+    const users = await fetchUsers();
+    setUsers(users);
+  })();
+
+  return () => {
+    // this now gets called when the component unmounts
+  };
+}, []);

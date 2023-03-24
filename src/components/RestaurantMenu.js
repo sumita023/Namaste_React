@@ -13,11 +13,11 @@ const Restaurantmenu = () => {
   }, []);
 
   async function getRestaurantMenu() {
-    // var data= await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.7008241&lng=88.3748212&restaurantId=220207&submitAction=ENTER");
-    var data= await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/v4/full?lat=22.7008241&lng=88.3748212&menuId="+menuId);
+    var data= await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.7008241&lng=88.3748212&restaurantId="+menuId +"&submitAction=ENTER");
+    //var data= await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/v4/full?lat=22.7008241&lng=88.3748212&menuId="+menuId);
     var json = await data.json();
-    setRestaurant(json.data);
-    console.log(json.data);
+    setRestaurant(json.data.cards[0].card.card.info);
+    console.log(json.data.cards[0].card.card.info.cuisines);
   }
   return !restaurant? <Shimmer/> : (
     <div className="menu">
@@ -32,10 +32,15 @@ const Restaurantmenu = () => {
       </div>
       <div>
         <h1>Menu</h1>
-        <ul>
+        {/* <ul>
           {Object.values(restaurant?.menu?.items).map((item) => (
             <li key={item.id}>{item.name}</li>
           ))}
+        </ul> */}
+        <ul>
+         { restaurant?.cuisines.map((item)=>{
+           return <li key={item}>{item}</li>
+          })}
         </ul>
       </div>
     </div>
