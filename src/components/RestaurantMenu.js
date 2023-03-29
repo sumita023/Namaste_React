@@ -2,23 +2,16 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IMG_CDN_URL } from "../constant";
 import Shimmer from "./Shimmer";
+import useRestaurant from "../utils/useRestaurant"
 
 const Restaurantmenu = () => {
   const { menuId } = useParams();
   // const params=useParams();
   // const {menuId}=params;
-  const [restaurant, setRestaurant] = useState(null);
-  useEffect(() => {
-    getRestaurantMenu();
-  }, []);
 
-  async function getRestaurantMenu() {
-    var data= await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.7008241&lng=88.3748212&restaurantId="+menuId +"&submitAction=ENTER");
-    //var data= await fetch("https://corsanywhere.herokuapp.com/https://www.swiggy.com/dapi/menu/v4/full?lat=22.7008241&lng=88.3748212&menuId="+menuId);
-    var json = await data.json();
-    setRestaurant(json.data.cards[0].card.card.info);
-    console.log(json.data.cards[0].card.card.info.cuisines);
-  }
+//custom hook
+  const restaurant=useRestaurant(menuId);
+
   return !restaurant? <Shimmer/> : (
     <div className="menu">
       <div>
