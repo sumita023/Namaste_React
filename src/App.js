@@ -1,4 +1,4 @@
-import React, { lazy,Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Body from "./components/Body";
 import Header from "./components/Header";
@@ -13,7 +13,7 @@ import Shimmer from "./components/Shimmer";
 // import Instamart from "./components/Instamart";
 
 const Instamart = lazy(() => import("./components/Instamart"));
-const About=lazy(()=>import("./components/About"))
+const About = lazy(() => import("./components/About"));
 
 /***
 + *
@@ -76,11 +76,17 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Body />,
+        element: (
+          <Body user={{ name: "Namaste React", email: "email@dev.com" }} />
+        ),
       },
       {
         path: "/about",
-        element: (<Suspense fallback={<h1>Loading....</h1>}><About></About></Suspense>),
+        element: (
+          <Suspense fallback={<h1>Loading....</h1>}>
+            <About></About>
+          </Suspense>
+        ),
         children: [
           {
             path: "profile",
@@ -99,7 +105,7 @@ const appRouter = createBrowserRouter([
       {
         path: "/instamart",
         element: (
-          <Suspense fallback={<Shimmer/>}>
+          <Suspense fallback={<Shimmer />}>
             <Instamart />
           </Suspense>
         ),

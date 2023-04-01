@@ -7,7 +7,7 @@ import {filterData} from "../utils/helper";
 import useOnline from "../utils/useOnline";
 
 
-const Body = () => {
+const Body = ({user}) => {
   const [searchText, setSearcText] = useState("");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [allRestaurants, setAllRestaurants] = useState([]);
@@ -75,7 +75,7 @@ if(!isOnline){
                 to={"/restaurant/" + restaurant.data.id}
                 key={restaurant.data.id}
               >
-                <RestaurantCard {...restaurant.data} />
+                <RestaurantCard {...restaurant.data} user={user}/>
               </Link>
             );
           })}

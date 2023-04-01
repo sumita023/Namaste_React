@@ -15,12 +15,12 @@ const Title = () => (
 const Header = () => {
   const [isLoggedInUser, setLoggedInUser] = useState(false);
   const isOnline = useOnline();
-  const [isShow, setShow] = useState(true);
+  const [isShow, setIsShow] = useState(true);
   return (
     <div className="flex justify-between bg-pink-100 shadow-lg px-2 sm:bg-yellow-300 md:bg-green-400">
       <button
         onClick={() => {
-          isShow?setShow(false):setShow(true);
+          isShow?setIsShow(false):setIsShow(true);
         }}
       >btn</button>
       {isShow?<Title/>:null}
