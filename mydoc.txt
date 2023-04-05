@@ -49,3 +49,6 @@ useEffect(() => {
 
 chapter 11:
 https://legacy.reactjs.org/docs/context.html
+
+chapter 12:
+https://redux-toolkit.js.org/tutorials/quick-start

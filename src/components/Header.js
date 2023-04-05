@@ -1,8 +1,10 @@
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
 
 import UserContext from "../utils/UserContext";
+
+import { useSelector } from "react-redux";
 
 const Title = () => (
   <a href="/">
@@ -19,16 +21,19 @@ const Header = () => {
   const isOnline = useOnline();
   const [isShow, setIsShow] = useState(true);
 
-  const {user}= useContext(UserContext);
+  const { user } = useContext(UserContext);
+  const cartItems = useSelector((store) => store.cart.items);
 
   return (
-    <div className="flex justify-between bg-pink-100 shadow-lg px-2 sm:bg-yellow-300 md:bg-green-400">
+    <div className="flex justify-between bg-pink-100 shadow-lg px-2 sm:bg-yellow-300 md:bg-pink-300">
       <button
         onClick={() => {
-          isShow?setIsShow(false):setIsShow(true);
+          isShow ? setIsShow(false) : setIsShow(true);
         }}
-      >btn</button>
-      {isShow?<Title/>:null}
+      >
+        btn
+      </button>
+      {isShow ? <Title /> : null}
       <div className="nav-items">
         <ul className="flex py-10">
           <li className="px-2">
@@ -43,7 +48,9 @@ const Header = () => {
           <li className="px-2">
             <Link to="/instamart">Instamart</Link>
           </li>
-          <li className="px-2">Cart</li>
+          <li className="px-2">
+            <Link to="/cart">Cart- {cartItems.length} items</Link>
+          </li>
         </ul>
       </div>
       {isOnline ? "🟢" : "🔴"}
