@@ -12,7 +12,7 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [allRestaurants, setAllRestaurants] = useState([]);
 
-  const { user,setMyUser } = useContext(UserContext);
+  const { user, setMyUser } = useContext(UserContext);
 
   useEffect(() => {
     getRestaurants();
@@ -24,7 +24,7 @@ const Body = () => {
     var data = await fetch(
       "https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.7008241&lng=88.3748212&page_type=DESKTOP_WEB_LISTING"
     );
-    
+
     var json = await data.json();
     // setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     // setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
@@ -49,6 +49,7 @@ const Body = () => {
     <>
       <div className="search-container p-2 bg-pink-50 m-2">
         <input
+          data-testid="serach-input"
           type="text"
           className="search-input p-2 m-2 focus:bg-green-100 text-green-900 border-green-900"
           placeholder="search"
@@ -59,6 +60,7 @@ const Body = () => {
         />
 
         <button
+          data-testid="search-btn"
           className="serach-btn p-2 m-2 bg-purple-500 text-white rounded-xl hover:bg-green-800"
           onClick={() => {
             //need to filter data
@@ -71,7 +73,7 @@ const Body = () => {
         </button>
         <input
           value={user.name}
-          onChange={(e) => 
+          onChange={(e) =>
             setMyUser({
               ...user,
               name: e.target.value,
@@ -80,7 +82,7 @@ const Body = () => {
         ></input>
         <input
           value={user.email}
-          onChange={(e) => 
+          onChange={(e) =>
             setMyUser({
               ...user,
               email: e.target.value,
@@ -88,7 +90,10 @@ const Body = () => {
           }
         ></input>
       </div>
-      <div className="restaurant-list flex flex-wrap">
+      <div
+        className="restaurant-list flex flex-wrap"
+        data-testid="restaurant-list"
+      >
         {filteredRestaurants?.length > 0 &&
           filteredRestaurants.map((restaurant) => {
             return (

@@ -52,3 +52,6 @@ https://legacy.reactjs.org/docs/context.html
 
 chapter 12:
 https://redux-toolkit.js.org/tutorials/quick-start
+
+chapter 13
+https://testing-library.com/docs/react-testing-library/intro/

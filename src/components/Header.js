@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 const Title = () => (
   <a href="/">
     <img
+      data-testid="logo"
       className="h-24 py-2"
       alt="Logo"
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRZpQh6EY7F3c1fJcvo00FnLgY8IiNs3352A&usqp=CAU"
@@ -21,7 +22,7 @@ const Header = () => {
   const isOnline = useOnline();
   const [isShow, setIsShow] = useState(true);
 
-  const { user } = useContext(UserContext);
+  const user = useContext(UserContext);
   const cartItems = useSelector((store) => store.cart.items);
 
   return (
@@ -49,12 +50,15 @@ const Header = () => {
             <Link to="/instamart">Instamart</Link>
           </li>
           <li className="px-2">
-            <Link to="/cart">Cart- {cartItems.length} items</Link>
+            <Link to="/cart" data-testid="cart">Cart- {cartItems.length} items</Link>
           </li>
         </ul>
       </div>
-      {isOnline ? "🟢" : "🔴"}
-      <span className="font-bold p-10 text-red-500">{user.name}</span>
+      <h1 data-testid="online-status">{isOnline ? "🟢" : "🔴"}</h1>
+      {user != null ? (
+        <span className="font-bold p-10 text-red-500">{user.user.name}</span>
+      ) : null}
+
       {isLoggedInUser ? (
         <button onClick={() => setLoggedInUser(false)}>LogOut</button>
       ) : (

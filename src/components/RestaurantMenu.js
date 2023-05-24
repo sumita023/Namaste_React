@@ -42,7 +42,7 @@ const Restaurantmenu = () => {
         Add
       </button>
       <div>
-        <h1 className="font-bold text-2xl">Menu</h1>
+        <h1 className="font-bold text-2xl" data-testid="menu">Menu</h1>
         {/* <ul>
           {Object.values(restaurant?.menu?.items).map((item) => (
             <li key={item.id}>{item.name}</li>
@@ -52,7 +52,7 @@ const Restaurantmenu = () => {
           {restaurant?.cuisines.map((item) => {
             return (
               <li key={item}>
-                {item} - <button className="p-2 m-2 bg-green-300" onClick={()=>addFoodItem(item)}>Add</button>
+                {item} - <button className="p-2 m-2 bg-green-300" onClick={()=>addFoodItem(item)} data-testid="add-Btn">Add</button>
               </li>
             );
           })}
